@@ -1,0 +1,8 @@
+import { DataTypes } from 'sequelize'
+import sequelize from '../config/database'
+
+const {{ModuleName}} = sequelize.define('{{ModuleName}}', {
+  // Definição do modelo para {{ModuleName}}
+})
+
+export default {{ModuleName}}
