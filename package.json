@@ -4,25 +4,31 @@
   "private": true,
   "scripts": {
     "create:module": "node scripts/createModule.js",
-    "start:dev": "npx nodemon Src/app.ts",
+    "start:dev": "npx nodemon app.ts",
     "build": "npx tsc",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@sequelize/postgres": "^7.0.0-alpha.43",
+    "chalk": "^4.1.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-jwt": "^7.7.8",
     "express-openid-connect": "^2.17.1",
+    "figlet": "^1.8.0",
     "jwks-rsa": "^2.1.5",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "sequelize": "^6.37.5"
   },
   "devDependencies": {
+    "@types/chalk": "^0.4.31",
     "@types/cookie-parser": "^1.4.7",
     "@types/express": "^5.0.0",
+    "@types/figlet": "^1.7.0",
     "@types/node": "^22.8.0",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",

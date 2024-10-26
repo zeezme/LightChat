@@ -1,29 +1,29 @@
 import { Request, Response } from 'express'
 
 class {{ModuleName}}Controller {
-  public async index(req: Request, res: Response): Promise<void> {
+  public async index(request: Request, response: Response): Promise<void> {
     // Lógica para o método "index"
-    res.send('Index')
+    response.send('Index')
   }
 
-  public async show(req: Request, res: Response): Promise<void> {
+  public async show(request: Request, response: Response): Promise<void> {
     // Lógica para o método "show"
-    res.send('Show')
+    response.send('Show')
   }
 
-  public async store(req: Request, res: Response): Promise<void> {
+  public async store(request: Request, response: Response): Promise<void> {
     // Lógica para o método "store"
-    res.send('Store')
+    response.send('Store')
   }
 
-  public async update(req: Request, res: Response): Promise<void> {
+  public async update(request: Request, response: Response): Promise<void> {
     // Lógica para o método "update"
-    res.send('Update')
+    response.send('Update')
   }
 
-  public async delete(req: Request, res: Response): Promise<void> {
+  public async delete(request: Request, response: Response): Promise<void> {
     // Lógica para o método "delete"
-    res.send('Delete')
+    response.send('Delete')
   }
 }
 
