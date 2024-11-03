@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import figlet from 'figlet'
 
 const showLogo = {
@@ -22,17 +23,19 @@ const showLogo = {
 
     console.info(
       combinedLogo,
-      chalk.hex('#FF0000').bold('Modo Desenvolvimento')
+      chalk.yellow.bold('Desenvolvido por Lucão do Código')
     )
-
-    console.warn(chalk.bold.yellow('Desenvolvido por Lucão do Código\n'))
-
-    console.log('Servidor rodando na porta', chalk.bold.bgRed('3000'), '\n')
 
     console.log(
       'Utilize',
       chalk.bold.bgGreen('npm run create:module <nomeModulo>'),
       'para criar um módulo.\n'
+    )
+
+    console.log(
+      'Utilize',
+      chalk.bold.bgRed('npm run remove:module <nomeModulo>'),
+      'para remover um módulo.\n'
     )
   }
 }

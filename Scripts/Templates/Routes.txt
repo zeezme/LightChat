@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import {{ModuleName}}Controller from '../Controller/Controller'
+import {{ModuleName}}Controller from '../Controller/{{ModuleName}}Controller'
 
 const router = Router()
 

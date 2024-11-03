@@ -1,9 +1,9 @@
-import { builtinModules } from 'module'
 import eslintPluginPrettier from 'eslint-plugin-prettier'
 import eslintPluginTS from '@typescript-eslint/eslint-plugin'
 import parser from '@typescript-eslint/parser'
 import eslintPluginSort from 'eslint-plugin-simple-import-sort'
 import eslintPluginUnused from 'eslint-plugin-unused-imports'
+import eslintPluginImport from 'eslint-plugin-import'
 
 export default [
   {
@@ -20,8 +20,9 @@ export default [
     plugins: {
       '@typescript-eslint': eslintPluginTS,
       prettier: eslintPluginPrettier,
-      // 'simple-import-sort': eslintPluginSort,
-      'unused-imports': eslintPluginUnused
+      'simple-import-sort': eslintPluginSort,
+      'unused-imports': eslintPluginUnused,
+      import: eslintPluginImport
     },
     rules: {
       'prettier/prettier': [
@@ -36,9 +37,17 @@ export default [
       'no-console': 'warn',
       '@typescript-eslint/no-unused-vars': 'warn',
       'unused-imports/no-unused-imports': 'warn',
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
-      'object-shorthand': ['error', 'always']
+      // 'simple-import-sort/imports': 'error',
+      // 'simple-import-sort/exports': 'error',
+      'object-shorthand': ['error', 'always'],
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          js: 'always',
+          ts: 'always'
+        }
+      ]
     }
   }
 ]

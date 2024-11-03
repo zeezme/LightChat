@@ -1,8 +1,42 @@
-import { DataTypes } from 'sequelize'
-import sequelize from '../config/database'
+import {
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model
+} from '@sequelize/core'
 
-const {{ModuleName}} = sequelize.define('{{ModuleName}}', {
-  // Definição do modelo para {{ModuleName}}
-})
+import {
+  Attribute,
+  Default,
+  PrimaryKey
+} from '@sequelize/core/decorators-legacy'
+
+/**
+ * Model representing the `{{ModuleName}}` table in the database.
+ *
+ * @remarks
+ * The attribute types are defined in `I{{ModuleName}}`, derived from `InferAttributes<{{ModuleName}}>`.
+ *
+ */
+
+class {{ModuleName}} extends Model<
+  InferAttributes<{{ModuleName}}>,
+  InferCreationAttributes<{{ModuleName}}>
+> {
+  @PrimaryKey
+  @Attribute(DataTypes.UUID)
+  @Default(DataTypes.UUIDV4)
+  declare id?: string
+
+  @Attribute(DataTypes.STRING)
+  declare example: string
+}
+
+/**
+ * Type defining the attributes of `{{ModuleName}}` model.
+ *
+ * @typeParam I{{ModuleName}} - Attributes inferred from `{{ModuleName}}`.
+ */
+export type I{{ModuleName}} = InferAttributes<{{ModuleName}}>
 
 export default {{ModuleName}}

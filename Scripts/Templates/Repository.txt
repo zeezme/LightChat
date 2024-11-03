@@ -1,13 +1,10 @@
-class {{ModuleName}}Repository {
-  public async findAll(): Promise<void> {}
+import BaseRepository from '../../.Core/Repository/BaseRepository'
+import {{ModuleName}} from '../Models/{{ModuleName}}Model'
 
-  public async findOne(id: string): Promise<void> {}
-
-  public async create(data: any): Promise<void> {}
-
-  public async update(id: string, data: any): Promise<void> {}
-
-  public async delete(id: string): Promise<void> {}
+class {{ModuleName}}Repository extends BaseRepository<{{ModuleName}}> {
+  constructor() {
+    super({{ModuleName}})
+  }
 }
 
-export default new {{ModuleName}}Repository()
+export default {{ModuleName}}Repository

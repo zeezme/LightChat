@@ -4,7 +4,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug start:dev",
+      "name": "Standalone Debugger",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start:dev"],
       "skipFiles": ["<node_internals>/**"],
@@ -13,6 +13,16 @@
         "NODE_ENV": "development",
         "PORT": "3000"
       }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach via WebSocket",
+      "address": "localhost",
+      "port": 9229,
+      "skipFiles": ["<node_internals>/**"],
+      "restart": true,
+      "timeout": 30000
     }
   ]
 }
