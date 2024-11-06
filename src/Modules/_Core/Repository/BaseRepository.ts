@@ -16,10 +16,11 @@ class BaseRepository<T extends Model<any, any>> {
 
   public async create(
     data: Expand<CreationAttributes<T>>,
-    { accountId, companyId }: IDefaultBaseRepositoryParams
+    { accountId, companyId, disableLogging }: IDefaultBaseRepositoryParams
   ): Promise<T> {
     let generatedSQL = ''
-    let entityId: number | null = null
+    let entityId: string | null = null
+
     try {
       const entity = await this.model.create(data as any, {
         logging: sql => {
@@ -33,35 +34,40 @@ class BaseRepository<T extends Model<any, any>> {
         throw new Error(`Entity ${this.model.name} did not return an id`)
       }
 
-      if (!accountId) {
-        throw new Error('AccountId is required')
+      if (
+        accountId &&
+        companyId &&
+        (disableLogging === false || disableLogging === undefined)
+      ) {
+        await Log.create({
+          accountId,
+          entity: this.model.name,
+          entityId,
+          action: 'create',
+          query: generatedSQL,
+          status: SuccessFailureEnum.SUCCESS
+        })
       }
-
-      if (!companyId) {
-        throw new Error('CompanyId is required')
-      }
-
-      await Log.create({
-        accountId,
-        entity: this.model.name,
-        entityId,
-        action: 'create',
-        query: generatedSQL,
-        status: SuccessFailureEnum.SUCCESS
-      })
 
       return entity
     } catch (error) {
       const query = generatedSQL || JSON.stringify(data)
-
-      await Log.create({
-        accountId,
-        entity: this.model.name,
-        entityId,
-        action: 'creation-failed',
-        query,
-        status: SuccessFailureEnum.FAILURE
-      })
+      if (
+        accountId &&
+        companyId &&
+        (disableLogging === false || disableLogging === undefined)
+      ) {
+        if (accountId) {
+          await Log.create({
+            accountId,
+            entity: this.model.name,
+            entityId,
+            action: 'creation-failed',
+            query,
+            status: SuccessFailureEnum.FAILURE
+          })
+        }
+      }
 
       throw error
     }

@@ -2,21 +2,24 @@ import {
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
-  Model
+  Model,
+  sql
 } from '@sequelize/core'
 import {
   Attribute,
   Default,
   NotNull,
-  PrimaryKey
+  PrimaryKey,
+  Table
 } from '@sequelize/core/decorators-legacy'
 
 import SuccessFailureEnum from '../../../../Types/Enums/SuccessFailureEnum.js'
 
+@Table({ tableName: 'logs' })
 class Log extends Model<InferAttributes<Log>, InferCreationAttributes<Log>> {
   @PrimaryKey
   @Attribute(DataTypes.UUID)
-  @Default(DataTypes.UUIDV4)
+  @Default(sql.uuidV4)
   declare id?: string
 
   @NotNull
@@ -28,8 +31,8 @@ class Log extends Model<InferAttributes<Log>, InferCreationAttributes<Log>> {
   declare entity: string
 
   @NotNull
-  @Attribute(DataTypes.INTEGER)
-  declare entityId: number | null
+  @Attribute(DataTypes.UUID)
+  declare entityId: string | null
 
   @Attribute(DataTypes.STRING)
   declare query: string | null
@@ -38,9 +41,8 @@ class Log extends Model<InferAttributes<Log>, InferCreationAttributes<Log>> {
   @Attribute(SuccessFailureEnum.sequelizeEnum())
   declare status: SuccessFailureEnum
 
-  @NotNull
-  @Attribute(DataTypes.INTEGER)
-  declare accountId: number
+  @Attribute(DataTypes.STRING)
+  declare accountId?: string
 }
 
 export default Log

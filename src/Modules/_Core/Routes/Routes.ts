@@ -1,47 +1,76 @@
 import dotenv from 'dotenv'
-import express from 'express'
-import { auth } from 'express-openid-connect'
-
-import { IDefaultRequest } from '../../../Types/Types/CoreRoutesTypes.js'
+import express, { Response } from 'express'
 import defaultRoutes from './DefaultRoutes.js'
+import { createClient } from '@supabase/supabase-js'
+import { IDefaultRequest } from '../../../Types/Types/CoreRoutesTypes.js'
+import Account from '../../Account/Models/Account.model.js'
+import AccountRepository from '../../Account/Repository/AccountRepository.js'
 
 dotenv.configDotenv()
 
 const router = express.Router()
 
-const secret = process.env.AUTH0_SECRET
-const baseURL = process.env.AUTH0_BASE_URL
-const clientID = process.env.AUTH0_CLIENT_ID
-const issuerBaseURL = process.env.AUTH0_ISSUER_BASE_URL
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_KEY
 
-if (!secret || !baseURL || !clientID || !issuerBaseURL) {
+if (!supabaseUrl || !supabaseKey) {
   throw new Error('Missing environment variables')
 }
 
-const config = {
-  authRequired: true,
-  auth0Logout: true,
-  secret,
-  baseURL,
-  clientID,
-  issuerBaseURL
-}
+const supabase = createClient(supabaseUrl, supabaseKey)
 
-router.use(auth(config))
-
-router.use((request: IDefaultRequest, response, next) => {
-  if (!request.oidc || !request.oidc.user) {
-    throw new Error('Missing user information from token.')
+router.post('/login', async (request, response) => {
+  if (!request.body.email || !request.body.password) {
+    response.status(400).json({ error: 'Missing email or password' })
   }
 
-  request.userId = request.oidc.user.sub
-  request.userEmail = request.oidc.user.email
-  request.userName = request.oidc.user.name
-  request.userRoles = request.oidc.user.roles
+  let { data, error } = await supabase.auth.signInWithPassword({
+    email: request.body.email,
+    password: request.body.password
+  })
 
-  // Pesquisar no accounts pelo userId, se não econtrar deve criar um
+  if (error) {
+    response.status(500).json({ error: error.message })
+  } else {
+    response.status(200).json(data)
+  }
+})
 
-  next()
+router.use(async (request: IDefaultRequest, response: Response, next) => {
+  const token = request.headers.authorization?.replace('Bearer ', '')
+
+  if (!token) {
+    return next(new Error('Missing authorization header'))
+  }
+
+  const { data, error } = await supabase.auth.getUser(token)
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  if (data) {
+    let account = await Account.findOne({
+      where: { authId: data.user.id }
+    })
+
+    if (!account) {
+      const accountRepository = new AccountRepository()
+      account = await accountRepository.create(
+        {
+          authId: data.user.id
+        },
+        {
+          disableLogging: true
+        }
+      )
+    }
+
+    request.accountId = account.id
+    request.authId = account.authId
+
+    next()
+  }
 })
 
 router.use(defaultRoutes)

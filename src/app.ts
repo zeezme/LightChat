@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import 'express-async-errors'
 import 'reflect-metadata'
 
 import cookieParser from 'cookie-parser'
@@ -9,6 +10,8 @@ import path from 'path'
 import sequelize from '../config/database.config.js'
 import showLogo from '../Scripts/ShowLogo.js'
 import router from './Modules/_Core/Routes/Routes.js'
+
+import { errorHandler } from './Modules/_Core/Middleware/ErrorHandler.js'
 
 const isDebugMode = process.env.DEBUG === 'true'
 
@@ -36,6 +39,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(router)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3000
 

@@ -1,7 +1,7 @@
-import { DataTypes, QueryInterface } from 'sequelize'
+const { DataTypes } = require('sequelize')
 
-export default {
-  async up(queryInterface: QueryInterface) {
+module.exports = {
+  async up(queryInterface) {
     await queryInterface.sequelize.transaction(async transaction => {
       await queryInterface.createTable(
         'companies',
@@ -41,7 +41,7 @@ export default {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
           },
-          auth0Id: {
+          authId: {
             type: DataTypes.STRING,
             allowNull: false
           },
@@ -135,7 +135,7 @@ export default {
             allowNull: false
           },
           entityId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: true
           },
           query: {
@@ -160,7 +160,7 @@ export default {
     })
   },
 
-  async down(queryInterface: QueryInterface) {
+  async down(queryInterface) {
     await queryInterface.sequelize.transaction(async transaction => {
       await queryInterface.dropTable('logs', { transaction })
       await queryInterface.dropTable('persons', { transaction })

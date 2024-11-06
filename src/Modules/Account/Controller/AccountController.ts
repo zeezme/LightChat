@@ -16,22 +16,6 @@ class AccountController {
   }
 
   public async store(request: Request, response: Response): Promise<void> {
-    const accountRepository = new AccountRepository()
-    // const company = new CompanyRepository()
-
-    await accountRepository.create(
-      {
-        auth0Id: '',
-        role: '',
-        companyId: 2,
-        id: v4()
-      },
-      {
-        accountId: 1,
-        companyId: 1
-      }
-    )
-
     response.send('Store')
   }
 

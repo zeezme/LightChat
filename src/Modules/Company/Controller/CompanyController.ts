@@ -1,4 +1,6 @@
 import { Request, Response } from 'express'
+import CompanyStoreService from '../Services/CompanyStoreService.js'
+import { IDefaultRequest } from '../../../Types/Types/CoreRoutesTypes.js'
 
 class CompanyController {
   public async index(request: Request, response: Response): Promise<void> {
@@ -11,9 +13,26 @@ class CompanyController {
     response.send('Show')
   }
 
-  public async store(request: Request, response: Response): Promise<void> {
-    // Lógica para o método "store"
-    response.send('Store')
+  public async store(
+    request: IDefaultRequest,
+    response: Response
+  ): Promise<void> {
+    const { name } = request.body
+
+    if (!name) {
+      throw new Error('Name is required')
+    }
+
+    if (!request.accountId) {
+      throw new Error('Account ID not found')
+    }
+
+    const company = CompanyStoreService.Run({
+      name,
+      accountId: request.accountId
+    })
+
+    response.send(company)
   }
 
   public async update(request: Request, response: Response): Promise<void> {

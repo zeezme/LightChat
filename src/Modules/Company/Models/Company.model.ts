@@ -1,4 +1,5 @@
 import {
+  CreationOptional,
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
@@ -19,20 +20,17 @@ export class Company extends Model<
   InferAttributes<Company>,
   InferCreationAttributes<Company>
 > {
-  @Attribute(DataTypes.UUIDV4)
-  @NotNull
-  @Default(DataTypes.UUIDV4)
   @PrimaryKey
-  declare id: string
+  @Attribute(DataTypes.UUID)
+  @Default(DataTypes.UUIDV4)
+  declare id?: CreationOptional<string>
 
+  @NotNull
   @Attribute(DataTypes.STRING)
   declare name: string
 
-  @Attribute(DataTypes.STRING)
-  declare role: string
-
   @HasMany(() => Account, 'companyId')
-  declare accounts?: NonAttribute<Account>
+  declare accounts?: NonAttribute<Account[]>
 }
 
 export type ICompany = InferAttributes<Company>

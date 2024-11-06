@@ -1,4 +1,5 @@
 export default interface IDefaultBaseRepositoryParams {
-  accountId: number
-  companyId: number
+  accountId?: string
+  companyId?: string
+  disableLogging?: boolean
 }
