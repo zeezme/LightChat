@@ -2,13 +2,15 @@ import {
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
-  Model
+  Model,
+  sql
 } from '@sequelize/core'
 
 import {
   Attribute,
   Default,
-  PrimaryKey
+  PrimaryKey,
+  Table
 } from '@sequelize/core/decorators-legacy'
 
 /**
@@ -18,14 +20,14 @@ import {
  * The attribute types are defined in `I{{ModuleName}}`, derived from `InferAttributes<{{ModuleName}}>`.
  *
  */
-
+@Table({ tableName: '{{ModuleNamePluralLowerCase}}' })
 class {{ModuleName}} extends Model<
   InferAttributes<{{ModuleName}}>,
   InferCreationAttributes<{{ModuleName}}>
 > {
   @PrimaryKey
   @Attribute(DataTypes.UUID)
-  @Default(DataTypes.UUIDV4)
+  @Default(sql.uuidV4)
   declare id?: string
 
   @Attribute(DataTypes.STRING)

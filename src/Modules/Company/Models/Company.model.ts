@@ -4,25 +4,28 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
-  NonAttribute
+  NonAttribute,
+  sql
 } from '@sequelize/core'
 import {
   Attribute,
   Default,
   HasMany,
   NotNull,
-  PrimaryKey
+  PrimaryKey,
+  Table
 } from '@sequelize/core/decorators-legacy'
 
 import Account from '../../Account/Models/Account.model.js'
 
+@Table({ tableName: 'companies' })
 export class Company extends Model<
   InferAttributes<Company>,
   InferCreationAttributes<Company>
 > {
   @PrimaryKey
   @Attribute(DataTypes.UUID)
-  @Default(DataTypes.UUIDV4)
+  @Default(sql.uuidV4)
   declare id?: CreationOptional<string>
 
   @NotNull
