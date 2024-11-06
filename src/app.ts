@@ -13,7 +13,7 @@ import router from './Modules/_Core/Routes/Routes.js'
 
 import { errorHandler } from './Modules/_Core/Middleware/ErrorHandler.js'
 
-const isDebugMode = process.env.DEBUG === 'true'
+const isDebugMode = process.env.NODE_ENV === 'development'
 
 if (isDebugMode) {
   showLogo.run()

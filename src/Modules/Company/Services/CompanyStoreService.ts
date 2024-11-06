@@ -1,7 +1,7 @@
 import CompanyRepository from '../Repository/CompanyRepository.js'
 import sequelize from '../../../../config/database.config.js'
-import { SequelizeScopeError } from '@sequelize/core'
 import { ICompanyInsertParams } from './CompanyServiceTypes.js'
+import { LightChatError } from '../../../Types/Errors/DefaultErrors.js'
 
 class CompanyStoreService {
   async Run(data: ICompanyInsertParams) {
@@ -22,10 +22,14 @@ class CompanyStoreService {
         return companyResponse
       })
     } catch (error) {
-      if (error instanceof SequelizeScopeError) {
-        throw new Error(error.message)
+      if (error instanceof Error) {
+        throw new LightChatError({
+          message: error.message,
+          statusCode: 400,
+          name: 'CompanyStoreService',
+          description: 'Error Creating Company'
+        })
       }
-      throw new Error('Could not create company')
     }
   }
 }

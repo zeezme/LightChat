@@ -27,7 +27,7 @@ class CompanyController {
       throw new Error('Account ID not found')
     }
 
-    const company = CompanyStoreService.Run({
+    const company = await CompanyStoreService.Run({
       name,
       accountId: request.accountId
     })

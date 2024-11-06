@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
+import { ILightChatError } from '../../../Types/Types/CoreErrorTypes.js'
 
 export class AppError extends Error {
   public readonly statusCode: number
@@ -16,21 +17,15 @@ export class AppError extends Error {
   }
 }
 
-interface IOperationalError extends Error {
-  statusCode?: number
-  status?: string
-  isOperational?: boolean
-  stack?: string
-}
-
 export const errorHandler: ErrorRequestHandler = (
-  err: IOperationalError,
+  err: ILightChatError,
   req: Request,
   res: Response,
   next: NextFunction
 ): void => {
   err.statusCode = err.statusCode || 500
   err.status = err.status || 'error'
+  err.description = err.description || 'Internal Server Error'
 
   if (process.env.NODE_ENV === 'development') {
     res.status(err.statusCode).json({
@@ -45,7 +40,10 @@ export const errorHandler: ErrorRequestHandler = (
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
-      message: err.message
+      name: err.name,
+      message: err.message,
+      description: err.description,
+      statusCode: err.statusCode
     })
     return
   }

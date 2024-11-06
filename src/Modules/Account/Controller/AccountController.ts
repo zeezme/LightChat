@@ -1,7 +1,4 @@
 import { Request, Response } from 'express'
-import { v4 } from 'uuid'
-
-import AccountRepository from '../Repository/AccountRepository.js'
 
 class AccountController {
   public async index(request: Request, response: Response): Promise<void> {
