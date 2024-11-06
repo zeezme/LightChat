@@ -255,10 +255,10 @@ if (isRemove === false) {
   console.log(
     Chalk.green.bold(
       figlet.textSync('Happy Coding', {
-        font: 'Ogre'
+        font: 'ANSI Shadow'
       })
     ),
-    chalk.yellow.bold('Desenvolvido por Lucão do Código'),
+    chalk.yellow.bold('by Lucão do Código'),
     '\n\n'
   )
 }

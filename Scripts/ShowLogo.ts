@@ -21,20 +21,17 @@ const showLogo = {
       .map((line, index) => chalk.cyan(line) + chalk.red(chatLogo[index] || ''))
       .join('\n')
 
-    console.info(
-      combinedLogo,
-      chalk.yellow.bold('Desenvolvido por Lucão do Código')
-    )
+    console.info(combinedLogo, chalk.yellow.bold('by Lucão do Código'))
 
     console.log(
       'Utilize',
-      chalk.bold.bgGreen('npm run create:module <nomeModulo>'),
-      'para criar um módulo.\n'
+      chalk.bold.underline('npm run create:module <nomeModulo>'),
+      'para criar um módulo'
     )
 
     console.log(
-      'Utilize',
-      chalk.bold.bgRed('npm run remove:module <nomeModulo>'),
+      'ou',
+      chalk.bold.underline('npm run remove:module <nomeModulo>'),
       'para remover um módulo.\n'
     )
   }
