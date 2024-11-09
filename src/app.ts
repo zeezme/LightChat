@@ -12,6 +12,7 @@ import showLogo from '../Scripts/ShowLogo.js'
 import router from './Modules/_Core/Routes/Routes.js'
 
 import { errorHandler } from './Modules/_Core/Middleware/ErrorHandler.js'
+import { createClient } from '@supabase/supabase-js'
 
 const isDebugMode = process.env.NODE_ENV === 'development'
 
@@ -20,6 +21,15 @@ if (isDebugMode) {
 }
 
 const __dirname = process.cwd()
+
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_KEY
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Missing environment variables')
+}
+
+export const supabase = createClient(supabaseUrl, supabaseKey)
 
 sequelize
   .authenticate()
