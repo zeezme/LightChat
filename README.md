@@ -27,7 +27,10 @@ LightChat é um projeto que visa facilitar o atendimento de pequenos e grandes n
   - Remove a estrutura de pastas.
   - Remove a rota do arquivo de rotas padrão.
   - Remove o model do arquivo de models padrão.
-  - Faz o Linting dos arquivos afetados. 
+  - Faz o Linting dos arquivos afetados.
+
+<img src="https://github.com/user-attachments/assets/54fa4263-115f-4387-a64c-9406469ec607" alt="CLI creating module message with Happy Coding text" width="50%">
+ 
 
 ### Funcionalidades de Base (_Core)
 - **Router**: Configuração central de rotas da aplicação.
