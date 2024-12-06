@@ -6,7 +6,7 @@ LightChat é um projeto que visa facilitar o atendimento de pequenos e grandes n
 ![Fase: Criando Estrutura](https://img.shields.io/badge/Fase-Criando_Estrutura-green)
 ![Progresso: Front-End](https://img.shields.io/badge/Progresso-Finalizando_Alterações-yellow)
 
-- Finalizando alterações no front para dar continuidade ao fluxo do diagrama.
+- Aguardando aprovação da API pela Meta para implementar o login empresarial. 
 
 ---
 
