@@ -61,6 +61,8 @@ LightChat é um projeto que visa facilitar o atendimento de pequenos e grandes n
 - **Typescript**: Para tipagem e maior segurança no desenvolvimento.
 - **Supabase**: Backend-as-a-Service utilizado para autenticação e gerenciamento de usuários.
 - **ESLint**: Ferramenta para garantir a qualidade do código.
+- **Sequelize**: ORM escolhido.
+- **Postgres**: Banco de dados escolhido.
 
 
 Contribuições e sugestões são bem-vindas!
